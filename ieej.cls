@@ -2,7 +2,7 @@
 %% ieej.cls - 電気学会全国大会 講演論文クラスファイル
 %% IEEJ National Convention Paper Class (LuaLaTeX/upLaTeX)
 %% ============================================================
-%% Version: 1.7
+%% Version: 1.9
 %% License: MIT
 %% ============================================================
 
@@ -40,6 +40,7 @@
 \RequirePackage{graphicx}
 \RequirePackage{booktabs}
 \RequirePackage{url}
+\RequirePackage{etoolbox}
 
 %% ============================================================
 %% フォント設定
@@ -87,6 +88,31 @@
 
 %% 段落間スペース
 \setlength{\parskip}{0pt}
+
+%% ============================================================
+%% 数式の上下スペース（上側を-12pt）
+%% ============================================================
+\AtBeginDocument{%
+  \abovedisplayskip=-12pt plus 2pt minus 2pt%
+  \belowdisplayskip=4pt plus 2pt minus 2pt%
+  \abovedisplayshortskip=-12pt plus 2pt%
+  \belowdisplayshortskip=4pt plus 2pt%
+}
+
+% すべてのフォントサイズ切り替えで数式スペースを設定
+\apptocmd{\normalsize}{%
+  \abovedisplayskip=-12pt plus 2pt minus 2pt%
+  \belowdisplayskip=4pt plus 2pt minus 2pt%
+  \abovedisplayshortskip=-12pt plus 2pt%
+  \belowdisplayshortskip=4pt plus 2pt%
+}{}{}
+
+\apptocmd{\small}{%
+  \abovedisplayskip=-12pt plus 2pt minus 2pt%
+  \belowdisplayskip=4pt plus 2pt minus 2pt%
+  \abovedisplayshortskip=-12pt plus 2pt%
+  \belowdisplayshortskip=4pt plus 2pt%
+}{}{}
 
 %% ============================================================
 %% 全角山括弧の定義
