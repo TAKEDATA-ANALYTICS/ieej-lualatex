@@ -1,0 +1,119 @@
+%% ============================================================
+%% 電気学会全国大会 講演論文テンプレート
+%% IEEJ National Convention Paper Template
+%% ============================================================
+%% 
+%% コンパイル方法:
+%%   latexmk template-j          (推奨)
+%%   make                        (Makefile使用)
+%%   lualatex template-j.tex     (直接実行)
+%%
+%% 必要パッケージ (Ubuntu/Debian):
+%%   sudo apt-get install texlive-lang-japanese texlive-luatex \
+%%                        texlive-fonts-extra texlive-plain-generic
+%%
+%% ============================================================
+
+\documentclass{ieej}
+
+\begin{document}
+
+%% ============================================================
+%% タイトル情報
+%% ============================================================
+\jtitle{電気学会全国大会講演論文の書き方}
+\jauthor{研究 花子\presenter，電気 太郎，学会 次郎 （○○○大学）}
+\etitle{Preparation of Papers for National Convention of I.E.E.\ JAPAN}
+\eauthor{Hanako Kenkyu, Taro Denki, Jiro Gakkai (○○○ University)}
+
+\maketitle
+
+%% ============================================================
+%% 本文
+%% ============================================================
+
+\section{まえがき}
+
+発表論文原稿は，A4原寸で印刷されます。執筆の際は以下の説明をよく読んだ上で，お使いのワードプロセッサ等で可能な範囲で指示に従って原稿をお書きください。なお，この説明書は，講演論文のレイアウトの見本になっていますので，参考にしてください。
+
+\section{レイアウトと文字サイズ}
+
+\subsection{マージンとカラム幅}
+
+原稿用紙のマージンおよびカラム幅（全ページ共通）は，表\ref{tab:margin}のとおりです。特に上下左右のマージンは厳守してください。
+
+2カラム（2段組）とし，各コラムの幅，カラム間マージンは表\ref{tab:margin}のとおりです。本文の字詰は，1行あたり26文字程度とします。分量は，図面，写真等を含めて1枚ないし2枚，シンポジウムは4枚以内です。
+
+\begin{table}[htbp]
+  \centering
+  \caption{マージンとカラム幅}
+  \label{tab:margin}
+  \begin{tabular}{lc}
+    \toprule
+    項目 & 寸法 \\
+    \midrule
+    上マージン & 20\,mm \\
+    下マージン & 20\,mm \\
+    左マージン & 18\,mm \\
+    右マージン & 18\,mm \\
+    カラム幅 & 82\,mm \\
+    カラム間 & 8\,mm \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{配置}
+
+表題等は，この見本に従って次の①〜④の順序で記載し，本文を書き始めてください。（2ページ目以降は，①〜③不要）
+
+①表題：第1行中央に2カラム通しで書く（長ければ第2行も使う）。
+
+②著者名および勤務先：表題の下を1行あけて，次の行から中央に2カラム通しで書く。講演者名の右肩に「＊」印を付ける。
+
+③英文表題，氏名（所属）：著者名および勤務先の下を1行あけて，次の行から中央に2カラム通しで書く。
+
+④本文：英文による表題，氏名の下を1行あけて，次の行から書く。2ページは，上マージンに続いて第1行から本文を書く。
+
+\subsection{文献}
+
+文献は本文末尾に通し番号を付けて一括記載し，本文中の該当個所に引用番号を付けてください\cite{shahzadi1965,amano1975}。文献の記載方法は，著者名，雑誌名，ページ，発行年の順序にしてください。
+
+\subsection{式および図}
+
+式および図は，図\ref{fig:example}および以下の記載例を参考にしてください。図面等を貼り付ける場合は，しわにならないように注意してください。また，図および表の説明には，英文を併記してください。
+
+\begin{equation}
+  E = RI
+  \label{eq:ohm}
+\end{equation}
+
+\begin{equation}
+  V = Ri + L\frac{di}{dt}
+  \label{eq:inductor}
+\end{equation}
+
+\begin{figure}[htbp]
+  \centering
+  % \includegraphics[width=0.8\columnwidth]{figure.pdf}
+  \fbox{\parbox{0.7\columnwidth}{\centering\vspace{1.5cm}図を挿入\vspace{1.5cm}}}
+  \caption{図面の例}
+  \label{fig:example}
+  Fig.\ref{fig:example}. An example of figures
+\end{figure}
+
+\section{まとめ}
+
+本テンプレートは電気学会全国大会の講演論文作成用です。LuaLaTeXでコンパイルしてください。
+
+%% ============================================================
+%% 文献
+%% ============================================================
+
+\begin{thebibliography}{9}
+  \bibitem{shahzadi1965}
+    B.~Shahzadi: Electron.\ Eng., \textbf{63}, 32～35 (1965)
+  \bibitem{amano1975}
+    天野一夫・有竹次男・角替四郎：昭50電気学会全大，No.508 (1975)
+\end{thebibliography}
+
+\end{document}
