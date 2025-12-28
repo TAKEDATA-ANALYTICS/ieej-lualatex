@@ -2,7 +2,7 @@
 %% ieej.cls - 電気学会全国大会 講演論文クラスファイル
 %% IEEJ National Convention Paper Class (LuaLaTeX/upLaTeX)
 %% ============================================================
-%% Version: 1.3
+%% Version: 1.7
 %% License: MIT
 %% ============================================================
 
@@ -48,20 +48,24 @@
   \RequirePackage{luatexja}
   \RequirePackage{luatexja-fontspec}
   %% 日本語フォント: MS明朝/MSゴシック（Windows）または IPAex（Linux）
-  %% Windowsの場合
   \IfFontExistsTF{MS Mincho}{%
     \setmainjfont{MS Mincho}
     \setsansjfont{MS Gothic}
+    \newjfontfamily\gtfamily{MS Gothic}
   }{%
-    %% Linux/macOSの場合: IPAexフォント
     \IfFontExistsTF{IPAexMincho}{%
       \setmainjfont{IPAexMincho}
       \setsansjfont{IPAexGothic}
-    }{}%
+      \newjfontfamily\gtfamily{IPAexGothic}
+    }{%
+      \newcommand{\gtfamily}{\sffamily}
+    }%
   }
   %% 欧文フォント: Times系
   \RequirePackage{newtxtext}
   \RequirePackage{newtxmath}
+\else
+  \newcommand{\gtfamily}{\sffamily}
 \fi
 
 %% ============================================================
@@ -81,6 +85,15 @@
 \RequirePackage{setspace}
 \setstretch{0.95}
 
+%% 段落間スペース
+\setlength{\parskip}{0pt}
+
+%% ============================================================
+%% 全角山括弧の定義
+%% ============================================================
+\newcommand{\zwlangle}{＜}
+\newcommand{\zwrangle}{＞}
+
 %% ============================================================
 %% セクション見出し
 %% ============================================================
@@ -88,30 +101,51 @@
 \renewcommand{\thesubsection}{\thesection・\arabic{subsection}}
 
 \makeatletter
+% セクション（ゴシック体）
 \renewcommand{\section}{%
   \@startsection{section}{1}{\z@}%
-  {1.5ex plus .5ex minus .2ex}%
-  {0.5ex plus .2ex}%
-  {\normalfont\normalsize\bfseries}}
+  {0.8ex plus .3ex minus .1ex}%
+  {0.3ex plus .1ex}%
+  {\normalfont\normalsize\gtfamily}}
 
+% サブセクションはrunin形式（明朝体）
 \renewcommand{\subsection}{%
   \@startsection{subsection}{2}{\z@}%
-  {1ex plus .3ex minus .1ex}%
-  {0.3ex plus .1ex}%
+  {0.6ex plus .2ex minus .1ex}%
+  {-1em}%
   {\normalfont\normalsize}}
 
-% セクション番号フォーマット（LuaLaTeX互換）
+% セクション番号フォーマット
 \renewcommand{\@seccntformat}[1]{%
-  \csname @seccntformat@#1\endcsname
-}
-\newcommand{\@seccntformat@section}{\thesection．}
-\newcommand{\@seccntformat@subsection}{\textless\thesubsection\textgreater\hspace{0.5em}}
+  \csname @seccntformat@#1\endcsname}
+\newcommand{\@seccntformat@section}{\thesection ．\hspace{0.5em}}
+\newcommand{\@seccntformat@subsection}{\zwlangle\thesubsection\zwrangle}
 \makeatother
 
 %% ============================================================
-%% キャプション設定
+%% キャプション設定（和文＋英文）
 %% ============================================================
-\RequirePackage[labelsep=period,font=small]{caption}
+\RequirePackage[font=small]{caption}
+
+% 表キャプション用コマンド（和文＋英文）
+\newcommand{\tabcaption}[2]{%
+  \refstepcounter{table}%
+  \par\vskip 0.5ex%
+  {\small 表 \thetable\hspace{0.5em}#1}%
+  \par\vskip -0.5ex%
+  {\small Table \thetable.\hspace{0.5em}#2}%
+  \par\vskip 0.5ex%
+}
+
+% 図キャプション用コマンド（和文＋英文）
+\newcommand{\figcaption}[2]{%
+  \refstepcounter{figure}%
+  \par\vskip 0.5ex%
+  {\small 図 \thefigure\hspace{0.5em}#1}%
+  \par\vskip -0.5ex%
+  {\small Fig.\thefigure.\hspace{0.5em}#2}%
+  \par%
+}
 
 %% ============================================================
 %% ヘッダー・フッターなし
@@ -147,14 +181,13 @@
 \renewcommand{\maketitle}{%
   \twocolumn[%
     \centering
-    {\Large\bfseries \@jtitle\par}%
-    \vskip 1.5ex%
+    {\Large \@jtitle\par}%
+    \vskip 1ex%
     {\normalsize \@jauthor\par}%
     \vskip 1.5ex%
     {\normalsize \@etitle\par}%
-    \vskip 0.5ex%
     {\normalsize \@eauthor\par}%
-    \vskip 2.5ex%
+    \vskip 2ex%
   ]%
 }
 \makeatother
@@ -169,16 +202,18 @@
 % 文献見出しをセンタリング＋横線付きに変更
 \renewenvironment{thebibliography}[1]{%
   \vskip 0.5ex%
-  \begin{center}%
-    \textbf{文　献}%
-  \end{center}%
-  \vskip -4.0ex%
+  \begingroup
+  \centering
+  文　献\par
+  \endgroup
+  \vskip -1.5ex%
   \noindent\hrulefill\par%
-  \vskip -20.0ex%
+  \vskip -0.5ex%
   \list{\@biblabel{\@arabic\c@enumiv}}{%
     \settowidth\labelwidth{\@biblabel{#1}}%
     \leftmargin\labelwidth
     \advance\leftmargin\labelsep
+    \topsep=0pt%
     \itemsep=0pt%
     \parsep=0pt%
     \@openbib@code

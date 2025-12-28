@@ -46,3 +46,8 @@ clean:
 
 distclean: clean
 	rm -f $(TEXFILE).pdf
+
+git: clean
+	git add . && \
+	git commit -m "$(shell hostname)" && \
+	git push
