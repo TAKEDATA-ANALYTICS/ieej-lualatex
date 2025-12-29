@@ -2,7 +2,7 @@
 %% ieej.cls - 電気学会全国大会 講演論文クラスファイル
 %% IEEJ National Convention Paper Class (LuaLaTeX/upLaTeX)
 %% ============================================================
-%% Version: 1.9
+%% Version: 2.0
 %% License: MIT
 %% ============================================================
 
@@ -127,12 +127,12 @@
 \renewcommand{\thesubsection}{\thesection・\arabic{subsection}}
 
 \makeatletter
-% セクション（ゴシック体）
+% セクション（ゴシック体、少し大きめ）
 \renewcommand{\section}{%
   \@startsection{section}{1}{\z@}%
   {0.8ex plus .3ex minus .1ex}%
   {0.3ex plus .1ex}%
-  {\normalfont\normalsize\gtfamily}}
+  {\normalfont\fontsize{11pt}{13pt}\selectfont\gtfamily}}
 
 % サブセクションはrunin形式（明朝体）
 \renewcommand{\subsection}{%
@@ -141,10 +141,10 @@
   {-1em}%
   {\normalfont\normalsize}}
 
-% セクション番号フォーマット
+% セクション番号フォーマット（番号もゴシック体）
 \renewcommand{\@seccntformat}[1]{%
   \csname @seccntformat@#1\endcsname}
-\newcommand{\@seccntformat@section}{\thesection ．\hspace{0.5em}}
+\newcommand{\@seccntformat@section}{{\gtfamily\thesection ．}\hspace{0.3em}}
 \newcommand{\@seccntformat@subsection}{\zwlangle\thesubsection\zwrangle}
 \makeatother
 
